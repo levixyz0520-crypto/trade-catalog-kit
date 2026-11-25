@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+my-catalog.pdf
+catalog.pdf
+.DS_Store
