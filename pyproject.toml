@@ -15,7 +15,7 @@ dependencies = ["Pillow>=13.0,<14", "reportlab>=4.4,<5", "openpyxl>=3.1.5,<4", "
 [project.optional-dependencies]
 web = ["streamlit>=1.67,<2", "pypdfium2>=4.30,<6"]
 ai = ["rembg[cpu]>=2.0.88,<3"]
-test = ["pytest>=8,<10", "pytest-cov>=6,<8", "pypdf>=6,<7", "build>=1.2,<2", "twine>=6,<7"]
+test = ["pytest>=8,<10", "pytest-cov>=6,<8", "pypdf>=6,<7", "build>=1.2,<2", "twine>=6,<8"]
 
 [project.scripts]
 trade-catalog = "trade_catalog_kit.cli:main"
