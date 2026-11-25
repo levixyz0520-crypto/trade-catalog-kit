@@ -4,7 +4,7 @@
 
 Turn an Excel or CSV product list and local images into a branded A4 PDF catalog. Trade Catalog Kit is a Python tool for exporters, manufacturers and wholesalers. Use the Streamlit interface for uploads and page previews, or the CLI for repeatable catalog builds. The core workflow runs locally without an account or paid API.
 
-[中文说明](README_CN.md) · [v0.2.0 downloads](https://github.com/levixyz0520-crypto/trade-catalog-kit/releases/tag/v0.2.0) · [Excel template](examples/product-template.xlsx) · [CSV template](examples/product-template.csv) · [Sample catalog](examples/demo.pdf)
+[中文说明](README_CN.md) · [Live demo](https://trade-catalog-kit.streamlit.app/) · [v0.2.0 downloads](https://github.com/levixyz0520-crypto/trade-catalog-kit/releases/tag/v0.2.0) · [Excel template](examples/product-template.xlsx) · [CSV template](examples/product-template.csv) · [Sample catalog](examples/demo.pdf)
 
 ## Run on Windows or macOS
 

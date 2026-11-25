@@ -2,7 +2,7 @@
 
 把 Excel 或 CSV 和产品图片生成带品牌信息的 A4 PDF 目录。适合家具外贸、制造工厂、出口商和 B2B 批发商制作选品册、展会目录及新品资料。支持 Streamlit 网页界面和命令行，核心流程可在本机运行。
 
-[English](README.md) · [v0.2.0 下载](https://github.com/levixyz0520-crypto/trade-catalog-kit/releases/tag/v0.2.0) · [测试记录](docs/testing.md) · [Excel 模板](examples/product-template.xlsx) · [CSV 模板](examples/product-template.csv) · [英文样板](examples/demo.pdf) · [中文样板](examples/demo-minimal.pdf)
+[English](README.md) · [在线演示](https://trade-catalog-kit.streamlit.app/) · [v0.2.0 下载](https://github.com/levixyz0520-crypto/trade-catalog-kit/releases/tag/v0.2.0) · [测试记录](docs/testing.md) · [Excel 模板](examples/product-template.xlsx) · [CSV 模板](examples/product-template.csv) · [英文样板](examples/demo.pdf) · [中文样板](examples/demo-minimal.pdf)
 
 ## Windows 和 macOS 安装
 
