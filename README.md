@@ -1,12 +1,14 @@
 # Trade Catalog Kit
 
+[![Tests](https://github.com/levixyz0520-crypto/trade-catalog-kit/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/levixyz0520-crypto/trade-catalog-kit/actions/workflows/tests.yml)
+
 Turn an Excel or CSV product list and local images into a branded A4 PDF catalog. Trade Catalog Kit is a Python tool for exporters, manufacturers and wholesalers. Use the Streamlit interface for uploads and page previews, or the CLI for repeatable catalog builds. The core workflow runs locally without an account or paid API.
 
-[中文说明](README_CN.md) · [Excel template](examples/product-template.xlsx) · [CSV template](examples/product-template.csv) · [Sample catalog](examples/demo.pdf)
+[中文说明](README_CN.md) · [v0.2.0 downloads](https://github.com/levixyz0520-crypto/trade-catalog-kit/releases/tag/v0.2.0) · [Excel template](examples/product-template.xlsx) · [CSV template](examples/product-template.csv) · [Sample catalog](examples/demo.pdf)
 
 ## Run on Windows or macOS
 
-Install Python 3.11 or later. Download and extract the repository source and open a terminal in that folder. Python 3.12 is used in the Docker example and is a good starting point.
+Install Python 3.11 or later. Download and extract the source ZIP from the release page, then open a terminal in that folder. The source ZIP includes the Streamlit app, example images and spreadsheets. Python 3.12 is used in the Docker example and is a good starting point.
 
 **Windows PowerShell**
 
@@ -36,7 +38,14 @@ The sample company, products, contact details and specifications are fictional. 
 
 ## Command line
 
-Install just the core package with `python -m pip install .`. Run it from the activated environment or replace `python` with the virtual environment's Python path above.
+For the CLI, download the wheel from the release page and install it with Python 3.11 or later. Run the command below from the folder containing the wheel.
+
+```sh
+python -m pip install ./trade_catalog_kit-0.2.0-py3-none-any.whl
+trade-catalog --help
+```
+
+From a source checkout, `python -m pip install .` also installs the CLI. Run it from the activated environment or replace `python` with the virtual environment's Python path above.
 
 ```sh
 python -m trade_catalog_kit examples/furniture.xlsx --images examples/images --check

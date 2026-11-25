@@ -13,6 +13,11 @@ Open `http://127.0.0.1:8501`. The image runs as a non-root user and includes the
 
 ## Streamlit Community Cloud
 
-In your own Streamlit Community Cloud account, authorize its GitHub access, choose the project repository and its default branch, set the entrypoint to `app.py` and choose Python 3.12 in Advanced settings. `requirements.txt` installs the project with its web extra and `.streamlit/config.toml` supplies the theme and upload limit. The optional AI extra is excluded from this standard deployment.
+1. Sign in to [Streamlit Community Cloud](https://share.streamlit.io/) and connect the `levixyz0520-crypto` GitHub account. Authorization for public repositories is sufficient for this demo.
+2. Choose **Create app**, then **Yup, I have an app**. Enter `levixyz0520-crypto/trade-catalog-kit` for the repository, `main` for the branch and `app.py` for the file path. You may choose a demo subdomain if one is available.
+3. Under **Advanced settings**, select Python 3.12. Leave the secrets field empty. Click **Deploy**.
+4. After deployment, check that the assigned `streamlit.app` URL opens in a signed-out browser session. Select **Try the included furniture example**, generate the PDF preview and confirm that the PDF downloads.
 
-[Official Streamlit deployment guide](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy)
+`requirements.txt` installs the project with its web extra. `.streamlit/config.toml` sets the theme and upload limit. The standard deployment serves the fictional furniture demo. The optional AI extra requires a separate install.
+
+[Official GitHub connection guide](https://docs.streamlit.io/deploy/streamlit-community-cloud/get-started/connect-your-github-account) · [Official deployment guide](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy)

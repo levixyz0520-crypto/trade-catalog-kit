@@ -2,11 +2,11 @@
 
 把 Excel 或 CSV 和产品图片生成带品牌信息的 A4 PDF 目录。适合家具外贸、制造工厂、出口商和 B2B 批发商制作选品册、展会目录及新品资料。支持 Streamlit 网页界面和命令行，核心流程可在本机运行。
 
-[English](README.md) · [Excel 模板](examples/product-template.xlsx) · [CSV 模板](examples/product-template.csv) · [英文样板](examples/demo.pdf) · [中文样板](examples/demo-minimal.pdf)
+[English](README.md) · [v0.2.0 下载](https://github.com/levixyz0520-crypto/trade-catalog-kit/releases/tag/v0.2.0) · [测试记录](docs/testing.md) · [Excel 模板](examples/product-template.xlsx) · [CSV 模板](examples/product-template.csv) · [英文样板](examples/demo.pdf) · [中文样板](examples/demo-minimal.pdf)
 
 ## Windows 和 macOS 安装
 
-安装 Python 3.11 或更新版本，推荐从 Python 3.12 开始。下载并解压项目源码，在项目目录打开终端。
+安装 Python 3.11 或更新版本，推荐从 Python 3.12 开始。从发布页下载并解压源码 ZIP，在项目目录打开终端。源码 ZIP 包含 Streamlit 界面、示例图片和表格。
 
 **Windows PowerShell**
 
@@ -38,7 +38,14 @@ python3 -m venv .venv
 
 ## 命令行
 
-以已安装工具的虚拟环境运行，或把 `python` 换成上面的虚拟环境路径。
+从发布页下载 wheel 后，可以直接安装 CLI。
+
+```sh
+python -m pip install ./trade_catalog_kit-0.2.0-py3-none-any.whl
+trade-catalog --help
+```
+
+以下示例从源码目录执行。请使用已安装工具的虚拟环境，或把 `python` 换成上面的虚拟环境路径。
 
 ```sh
 python -m trade_catalog_kit examples/furniture.xlsx --images examples/images --check
