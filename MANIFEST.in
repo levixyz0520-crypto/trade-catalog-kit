@@ -1,0 +1,7 @@
+include README_CN.md CHANGELOG.md CONTRIBUTING.md SECURITY.md app.py catalog.py requirements.txt Dockerfile
+include .dockerignore
+include .streamlit/config.toml
+recursive-include assets *.md *.png *.txt
+recursive-include docs *.md
+recursive-include examples *.csv *.pdf *.png *.py *.xlsx
+recursive-include tests *.py

@@ -1,18 +1,28 @@
 name: Tests
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
 jobs:
   test:
-    runs-on: ubuntu-latest
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        python: ['3.10', '3.12']
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ['3.11', '3.12']
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: ${{ matrix.python }}
-      - run: python -m pip install -r requirements.txt
-      - run: python -m unittest discover -s tests -v
-      - run: python catalog.py examples/products.csv --images examples/images --out /tmp/catalog.pdf
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: python -m pip install ".[web,test]"
+      - run: python -m pytest --cov=trade_catalog_kit --cov-report=term-missing
+      - run: python -m pip check
+      - run: trade-catalog examples/furniture.xlsx --images examples/images --out generated-catalog.pdf
+      - if: runner.os == 'Linux' && matrix.python == '3.12'
+        run: python -m build
+      - if: runner.os == 'Linux' && matrix.python == '3.12'
+        run: python -m twine check dist/*

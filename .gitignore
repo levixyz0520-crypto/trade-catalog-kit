@@ -5,3 +5,13 @@ __pycache__/
 my-catalog.pdf
 catalog.pdf
 .DS_Store
+*.egg-info/
+.coverage
+htmlcov/
+build/
+dist/
+.env
+.env.*
+.streamlit/secrets.toml
+*.pem
+*.key

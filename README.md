@@ -1,61 +1,85 @@
 # Trade Catalog Kit
 
-An offline Python utility for small exporters, wholesalers and product teams to turn structured product specifications and local photographs into a consistent, printable A4 PDF catalog. No account, API key or paid AI service is needed.
+Turn an Excel or CSV product list and local images into a branded A4 PDF catalog. Trade Catalog Kit is a Python tool for exporters, manufacturers and wholesalers. Use the Streamlit interface for uploads and page previews, or the CLI for repeatable catalog builds. The core workflow runs locally without an account or paid API.
 
-**Status:** v0.1 prototype. The included products and drawings are illustrative, not supplier specifications or commercial photographs.
+[中文说明](README_CN.md) · [Excel template](examples/product-template.xlsx) · [CSV template](examples/product-template.csv) · [Sample catalog](examples/demo.pdf)
 
-## Quick start
+## Run on Windows or macOS
 
-Requires Python 3.10 or newer. From a terminal in this folder:
+Install Python 3.11 or later. Download and extract the repository source and open a terminal in that folder. Python 3.12 is used in the Docker example and is a good starting point.
 
-```sh
-python -m venv .venv
+**Windows PowerShell**
+
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install ".[web]"
+.\.venv\Scripts\python.exe -m streamlit run app.py --server.address 127.0.0.1
 ```
 
-Activate the environment: on Windows PowerShell run `.\.venv\Scripts\Activate.ps1`; on macOS/Linux run `source .venv/bin/activate`. If PowerShell blocks activation, use `.venv\Scripts\python.exe` instead of `python` in the commands below.
+**macOS and Linux**
 
 ```sh
-python -m pip install -r requirements.txt
-python catalog.py examples/products.csv --images examples/images --check
-python catalog.py examples/products.csv --images examples/images --out my-catalog.pdf --brand "MY COMPANY"
-python -m unittest discover -s tests -v
+python3 -m venv .venv
+.venv/bin/python -m pip install '.[web]'
+.venv/bin/python -m streamlit run app.py --server.address 127.0.0.1
 ```
 
-Open `my-catalog.pdf` to see the result. A sample rendered PDF is also in `examples/demo.pdf`.
+Open `http://127.0.0.1:8501`. Start with **Try the included furniture example**, or upload your spreadsheet and product images. Review warnings and field mappings, choose a template, and set branding and company details. Select **Generate PDF preview**, check each page, then download the PDF. Press Ctrl+C in the terminal to stop the app.
 
-## Use your own data
-
-Copy `examples/products.csv`, edit it in Excel or a text editor, and save as CSV UTF-8. Keep the column names. Put product photographs in a folder, and supply their relative filenames in the `image` column. Image files stay local.
-
-| Field | Required | Meaning |
+| Example | Format | Use case |
 | --- | --- | --- |
-| sku | Yes | Unique model code (case insensitive) |
-| name | Yes | English product name |
-| size_cm | Yes | Three positive dimensions in centimeters, e.g. `80 x 40 x 90` |
-| image | Yes | Relative PNG, JPEG or WebP image filename |
-| carton_cm | No | Single carton dimensions in centimeters |
-| gross_kg | No | Positive gross weight in kilograms |
-| cbm | No | Positive volume in cubic meters; calculated from carton dimensions if omitted |
-| colors | No | Available finishes or colors |
-| notes | No | Short specification or disclaimer |
+| [Editorial](examples/demo.pdf) | Two products per page, English | Share a furniture assortment with buyers. |
+| [Modern](examples/demo-modern.pdf) | Four products per page, English | Send a compact wholesale line sheet. |
+| [Minimal](examples/demo-minimal.pdf) | One product per page, simplified Chinese labels | Highlight individual products and their specifications. |
 
-The validator rejects duplicate SKUs, missing required values, invalid dimensions/weights, unreadable images, and image paths outside the selected image directory. The PDF preserves image aspect ratio and honors EXIF orientation. Each page contains up to two product cards. Optional blank fields are omitted. A failed build does not replace an existing PDF.
+The sample company, products, contact details and specifications are fictional. The furniture images are original illustrations. See [sample asset provenance](assets/README.md).
 
-## Limitations
+## Command line
 
-- The current layout uses Helvetica and is intended for English/Latin text, not CJK or arbitrary Unicode scripts.
-- CSV input only; Excel users can export UTF-8 CSV. The PDF layout is fixed rather than a drag-and-drop template editor.
-- CBM calculation assumes a single rectangular carton. For multiple cartons per product, enter verified total CBM and omit `carton_cm` if it is not applicable. A supplied CBM is preserved, not certified or cross-checked. No container-loading optimization or freight quotation is provided.
-- Images are resized and alpha-composited against white; this is not AI background removal. Use authorized images with clean backgrounds for best results.
-- Long values may be rejected if they cannot fit the layout. Review every generated page and all supplier specifications before sending it to customers.
-- The included CI workflow is configured but has not run on GitHub yet. Local tests were executed with Python and installed dependencies in the development environment.
+Install just the core package with `python -m pip install .`. Run it from the activated environment or replace `python` with the virtual environment's Python path above.
 
-## Development and contributions
+```sh
+python -m trade_catalog_kit examples/furniture.xlsx --images examples/images --check
+python -m trade_catalog_kit examples/furniture.xlsx --images examples/images --theme modern --per-page 4 --brand "Oak & Harbor" --out collection.pdf
+python -m trade_catalog_kit --help
+```
 
-Run the unit tests before submitting changes. Report reproducible issues with a minimal, anonymized CSV and sample image. Do not attach customer details, supplier price lists, account credentials or copyrighted images without permission. Suggestions for schema mappings, multilingual fonts, packaging details and accessibility are welcome.
+`trade-catalog` is equivalent when the environment's executables are on `PATH`. The v0.1 `python catalog.py examples/products.csv --images examples/images --out catalog.pdf` workflow and old CSV field names remain usable from the source folder after installing the package.
 
-Potential improvements: XLSX import, image-matching reports, configurable page templates, multiple-carton support, preview UI, and multi-language fonts. These are proposed features, not implemented yet.
+## Spreadsheet fields
 
-## License
+Use UTF-8 CSV or the first worksheet of an `.xlsx` file. Put headers in the first row. Store codes with leading zeroes as Excel text. Replace formulas with their values before importing. Standard headers below are recognized automatically, and the web app or `--mapping fields.json` can map custom headers.
 
-MIT. See `LICENSE`.
+| Field | Entry |
+| --- | --- |
+| Product Code | Required, unique without regard to case. |
+| Product Name | Required. |
+| Product Size | Required. Example `80 × 40 × 90 cm`. |
+| Category | Optional group or collection. |
+| Carton Size | Optional. Use `;` between different carton sizes per unit. |
+| Gross Weight | Optional in kg, g or lb. Default kg. |
+| CBM | Optional total packed m³ per piece. A supplied value takes precedence. |
+| Cartons per Piece | Optional positive integer. If carton sizes are supplied, defaults to the number of sizes listed. |
+| 40HQ Quantity | Optional nonnegative integer. Shown separately as a supplied value. |
+| Color, Material, Description | Optional product details. |
+| Image | Optional filename. Leave blank to match by product code. |
+
+Dimensions support `mm`, `cm`, `m`, `in` and `ft`. Bare numbers default to cm, and `800 × 400 × 900 mm` applies the unit to all three values. Write each unit when mixing units. A single carton size is multiplied by Cartons per Piece. Distinct sizes are added together, and an explicitly supplied carton count must match the number of sizes.
+
+40HQ estimates are `floor(available m³ × utilization ÷ CBM per piece)`, with defaults of 76 m³ and 85%. Volume, dimensions, stackability, payload and handling constraints affect real loading. Use this number only as a theoretical volume estimate. The PDF labels estimates and shows supplied quantities separately. Change the assumptions in the app or via `--container-volume` and `--utilization`.
+
+JPEG, PNG and WebP are accepted. Missing images get a placeholder and warning. `--strict-images` makes omissions fatal. The default fits images proportionally. Enable center crop only when cropping is acceptable. Transparency can be composited over white or theme color. For offline AI background removal, use `python -m pip install '.[web,ai]'` on Python 3.11+ in a supported rembg environment. The first run downloads the CPU model, then images can be processed locally. Review cutout edges before sharing.
+
+English and simplified Chinese PDF labels are included. Product text is taken from the spreadsheet. For other scripts or font portability, choose an embeddable TrueType font covering all text. Complex-script shaping and automatic translation are outside this version. If a field exceeds the page layout, shorten it or choose fewer products per page.
+
+See [advanced usage](docs/usage.md) for mappings, sizing examples and upload limits. See [deployment](docs/deployment.md) for Docker and Streamlit Community Cloud. Use [GitHub Issues](https://github.com/levixyz0520-crypto/trade-catalog-kit/issues) for feedback and [the security policy](SECURITY.md) for private reports.
+
+## Development
+
+```sh
+python -m pip install '.[web,test]'
+python -m pytest --cov=trade_catalog_kit
+python -m build
+```
+
+[Contributing](CONTRIBUTING.md) · [Verification](docs/testing.md) · [Changelog](CHANGELOG.md) · [Roadmap](docs/roadmap.md) · [MIT License](LICENSE)
